@@ -1,8 +1,8 @@
-const Block = require('./block');
+const Block = require('./bloque');
 class BlockChain {
     constructor() {
-        chain = [this.crearBloqueGenesis()];
-        dificultad = 2
+        this.chain = [this.crearBloqueGenesis()];
+        this.dificultad = 2;
     }
 
     //Crea el primer bloque (Bloque Genesis)
@@ -18,7 +18,7 @@ class BlockChain {
     //Agrega un nuevo bloque a la cadena
     agregarBloque(nuevoBloque) {
         nuevoBloque.hashAnterior = this.getUltimoBloque().hash;
-        nuevoBloque.hash = nuevoBloque.minarBloque(this.dificultad);
+        nuevoBloque.minarBloque(this.dificultad);
         this.chain.push(nuevoBloque);
     }
 
@@ -28,15 +28,15 @@ class BlockChain {
             const bloqueAnterior = this.chain[i - 1];
 
             if (bloqueActual.hash != bloqueActual.calcularHash()) {
-                return false;
+                return "Error en el bloque " + i;
             }
 
             if (bloqueActual.hashAnterior != bloqueAnterior.hash) {
-                return false;
+                return "Error en el bloque " + i;
             }
 
         }
-        return true;
+        return "No Hubo errores";
     }
 }
 
